@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: briefing
+    description: Agency briefing request intake
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /briefing-requests:
+    post:
+      operationId: submitBriefingRequest
+      tags: [briefing]
+      summary: Submit an agency briefing request
+      description: >
+        Captures an agency's program inquiry so that Advanced Creation Studio
+        staff can follow up with a tailored program briefing.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BriefingRequestBody"
+      responses:
+        "201":
+          description: Request received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BriefingRequestResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    BriefingRequestBody:
+      type: object
+      properties:
+        agencyName:
+          type: string
+          description: Name of the requesting agency or organization
+          minLength: 1
+          maxLength: 200
+        programInterest:
+          type: string
+          description: >
+            Which program(s) the agency is interested in learning more about.
+            Use "general" for a general inquiry.
+          minLength: 1
+          maxLength: 200
+        contactName:
+          type: string
+          description: Full name of the primary contact
+          minLength: 1
+          maxLength: 200
+        contactEmail:
+          type: string
+          description: Email address of the primary contact
+        message:
+          type: string
+          description: Question, context, or specific area of interest
+          maxLength: 2000
+      required:
+        - agencyName
+        - programInterest
+        - contactName
+        - contactEmail
+
+    BriefingRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+          description: Server-assigned reference ID for the submission
+      required:
+        - success
+        - id
+
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+      required:
+        - error

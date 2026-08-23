@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Studio"
+description = "A creative studio portfolio site built on the Organic design system. Showcases projects, services, and studio identity with a bold typographic aesthetic using sharp corners, electric yellow, and a dark/light dual-mode palette."
+version = "1.0.0"
+id = "artifacts/studio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18425
+
+[services.development]
+run = "pnpm --filter @workspace/studio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/studio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/studio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18425"
+BASE_PATH = "/"

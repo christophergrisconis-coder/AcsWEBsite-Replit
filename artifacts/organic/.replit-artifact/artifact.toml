@@ -1,0 +1,19 @@
+kind = "design-system"
+previewPath = "/organic/"
+title = "Organic"
+description = "A warm, editorial design system for premium home and lifestyle experiences, built around tactile neutrals, muted terracotta, and refined typography."
+version = "1.0.0"
+id = "artifacts/organic"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/organic/" ]
+localPort = 18832
+
+[services.development]
+run = "pnpm --filter @workspace/organic run dev"
+
+[services.env]
+PORT = "18832"
+BASE_PATH = "/organic/"

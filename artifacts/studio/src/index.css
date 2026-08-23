@@ -1,0 +1,85 @@
+@import "@workspace/organic/styles.css";
+
+/* Studio-specific CSS variable extensions */
+:root {
+  --separator: 0 0% 88%;
+  --hover-bg: 0 0% 95%;
+}
+
+.dark {
+  --separator: 0 0% 15%;
+  --hover-bg: 0 0% 8%;
+}
+
+/* Extend Tailwind theme with Studio-specific tokens */
+@theme inline {
+  --font-display: 'Syne', system-ui, sans-serif;
+  --color-separator: hsl(var(--separator));
+  --color-hover: hsl(var(--hover-bg));
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.5s ease-out forwards;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/*
+ * Print: force light-mode tokens so /outcomes/print always renders on white
+ * regardless of the user's dark-mode setting. All print-page Tailwind classes
+ * (text-foreground, bg-background, border-border, etc.) resolve via these vars.
+ */
+@media print {
+  :root,
+  .dark {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 5%;
+    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 92%;
+    --border: 0 0% 82%;
+    --separator: 0 0% 82%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+  }
+}
+
+/* Consistent visible keyboard focus without changing the editorial palette. */
+.focus-visible-ring:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

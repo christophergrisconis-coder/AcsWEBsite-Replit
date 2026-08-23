@@ -1,0 +1,47 @@
+/*
+ * Minimal print supplement for the ACS Outcomes one-pager (/outcomes/print).
+ *
+ * Visual tokens (color, typography, spacing) come from Organic design-system
+ * variables via Tailwind utility classes in OutcomesPrint.tsx.
+ * @media print in index.css forces the :root light-mode palette when printing.
+ *
+ * This file only handles things Tailwind utilities cannot: @page geometry,
+ * print-color-adjust, and keep-together hints that must target print media.
+ */
+
+@page {
+  size: letter portrait;
+  margin: 0.5in 0.6in;
+}
+
+/* ── Root layout ─────────────────────────────────────────────────────── */
+.acs-print-root {
+  max-width: 7.5in;
+  margin: 0 auto;
+  /* Screen padding so the one-pager doesn't bleed edge-to-edge on screen. */
+  padding: 0.5in 0.65in;
+}
+
+@media print {
+  .acs-print-root {
+    /* @page handles margins; no extra padding needed in print. */
+    padding: 0;
+    max-width: none;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Keep each program section and metric cell together across page breaks. */
+  .acs-print-program {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .acs-print-metric {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
