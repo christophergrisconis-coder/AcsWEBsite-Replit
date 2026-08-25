@@ -1,27 +1,10 @@
-import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
+import { Router, type IRouter, type Request, type Response } from "express";
 import { db, programOutcomesTable, aggregateImpactTable } from "@workspace/db";
 import type { DbMetric, DbCohortContext, DbOutcomeDefinition, DbAggregateStat } from "@workspace/db";
 import { eq } from "drizzle-orm";
+import { requireAdminToken } from "../lib/admin-auth";
 
 const router: IRouter = Router();
-
-// ---------------------------------------------------------------------------
-// Admin auth middleware
-// ---------------------------------------------------------------------------
-
-function requireAdminToken(req: Request, res: Response, next: NextFunction): void {
-  const secret = process.env.SESSION_SECRET;
-  const token = req.headers["x-admin-token"];
-  if (!secret || !token || token !== secret) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
-  }
-  next();
-}
-
-// ---------------------------------------------------------------------------
-// Type guards / coercers for JSON body fields
-// ---------------------------------------------------------------------------
 
 function isStringOrUndefined(v: unknown): v is string | undefined {
   return v === undefined || typeof v === "string";
@@ -72,10 +55,6 @@ function isAggregateStatArray(v: unknown): v is DbAggregateStat[] {
   );
 }
 
-// ---------------------------------------------------------------------------
-// GET /api/outcomes — public
-// ---------------------------------------------------------------------------
-
 router.get("/outcomes", async (_req: Request, res: Response): Promise<void> => {
   try {
     const [programs, impact] = await Promise.all([
@@ -109,15 +88,10 @@ router.get("/outcomes", async (_req: Request, res: Response): Promise<void> => {
   }
 });
 
-// ---------------------------------------------------------------------------
-// PUT /api/outcomes/programs/:programId — admin
-// ---------------------------------------------------------------------------
-
 router.put(
   "/outcomes/programs/:programId",
   requireAdminToken,
   async (req: Request, res: Response): Promise<void> => {
-    // Express 5 types params as string | string[]; programId is always a scalar
     const programId = Array.isArray(req.params.programId)
       ? req.params.programId[0]
       : req.params.programId;
@@ -130,7 +104,6 @@ router.put(
     const body = req.body as Record<string, unknown>;
     const { programTitle, tagline, measurementPeriod, cohortContext, metrics, definitions } = body;
 
-    // Validate each provided field
     if (!isStringOrUndefined(programTitle)) {
       res.status(400).json({ error: "programTitle must be a string" });
       return;
@@ -167,7 +140,6 @@ router.put(
         return;
       }
 
-      // Build a strongly-typed partial update object
       const updates: {
         programTitle?: string;
         tagline?: string;
@@ -198,10 +170,6 @@ router.put(
   },
 );
 
-// ---------------------------------------------------------------------------
-// PUT /api/outcomes/aggregate — admin; upserts the singleton row
-// ---------------------------------------------------------------------------
-
 router.put(
   "/outcomes/aggregate",
   requireAdminToken,
@@ -229,7 +197,6 @@ router.put(
         .where(eq(aggregateImpactTable.id, 1));
 
       if (existing.length === 0) {
-        // Initialize the singleton with provided values (or empty defaults)
         await db.insert(aggregateImpactTable).values({
           id: 1,
           headline: headline ?? "",
@@ -238,7 +205,6 @@ router.put(
           updatedAt: new Date(),
         });
       } else {
-        // Build a strongly-typed partial update object
         const updates: {
           headline?: string;
           note?: string;
