@@ -2,9 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { BriefingModal } from "@/components/BriefingModal";
 
 const navItems = [
   { label: "Impact", path: "/work" },
+  { label: "Outcomes", path: "/outcomes" },
+  { label: "Partners", path: "/partners" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
 ];
@@ -17,6 +20,7 @@ export function Header({ revealMode = false }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(!revealMode);
   const [mounted, setMounted] = useState(false);
+  const [briefingOpen, setBriefingOpen] = useState(false);
   const [location] = useLocation();
   const { theme, setTheme } = useTheme();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -92,7 +96,6 @@ export function Header({ revealMode = false }: HeaderProps) {
     >
       <div className="container-wide relative">
         <div className="flex items-center justify-between h-20 md:h-24">
-          {/* Logo */}
           <Link
             href="/"
             className="font-display text-lg font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
@@ -100,14 +103,14 @@ export function Header({ revealMode = false }: HeaderProps) {
              Advanced Creation
           </Link>
 
-          {/* Desktop Navigation — Centered */}
-          <nav className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
                 className={`text-xs font-sans tracking-widest uppercase transition-all duration-300 hover:tracking-[0.2em] ${
-                  location === item.path
+                  location === item.path ||
+                  (item.path === "/work" && location.startsWith("/work/"))
                     ? "text-foreground"
                     : "text-foreground/80 hover:text-foreground"
                 }`}
@@ -115,9 +118,15 @@ export function Header({ revealMode = false }: HeaderProps) {
                 {item.label}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={() => setBriefingOpen(true)}
+              className="text-xs font-sans tracking-widest uppercase text-accent hover:text-foreground transition-all duration-300 hover:tracking-[0.2em] focus-visible-ring"
+            >
+              Briefing
+            </button>
           </nav>
 
-          {/* Right — Theme Toggle */}
           <div className="hidden md:flex items-center">
             <button
               onClick={toggleTheme}
@@ -129,7 +138,6 @@ export function Header({ revealMode = false }: HeaderProps) {
             </button>
           </div>
 
-          {/* Mobile controls */}
           <div className="md:hidden flex items-center gap-2">
             <button
               onClick={toggleTheme}
@@ -153,7 +161,6 @@ export function Header({ revealMode = false }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
         <div
           ref={mobileMenuRef}
@@ -173,9 +180,21 @@ export function Header({ revealMode = false }: HeaderProps) {
                 {item.label}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={() => setBriefingOpen(true)}
+              className="text-4xl font-display text-accent text-left focus-visible-ring"
+            >
+              Briefing
+            </button>
           </nav>
         </div>
       )}
+      <BriefingModal
+        open={briefingOpen}
+        onClose={() => setBriefingOpen(false)}
+        defaultProgram="general"
+      />
     </header>
   );
 }
