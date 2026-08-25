@@ -10,10 +10,6 @@
 
 import { pool } from "@workspace/db";
 
-// ---------------------------------------------------------------------------
-// Static seed data (mirrors artifacts/studio/src/data/outcomes.ts)
-// ---------------------------------------------------------------------------
-
 const PROGRAMS = [
   {
     programId: "reentry-pathways",
@@ -100,14 +96,9 @@ const AGGREGATE_IMPACT = {
   ],
 };
 
-// ---------------------------------------------------------------------------
-// Migration runner
-// ---------------------------------------------------------------------------
-
 export async function runMigrations(): Promise<void> {
   const client = await pool.connect();
   try {
-    // 1. Create tables (idempotent)
     await client.query(`
       CREATE TABLE IF NOT EXISTS program_outcomes (
         program_id        TEXT        PRIMARY KEY,
@@ -128,9 +119,45 @@ export async function runMigrations(): Promise<void> {
         stats       JSONB       NOT NULL DEFAULT '[]',
         updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
+
+      CREATE TABLE IF NOT EXISTS partner_proofs (
+        id                   TEXT        PRIMARY KEY,
+        kind                 TEXT        NOT NULL,
+        title                TEXT        NOT NULL,
+        quote                TEXT,
+        organization         TEXT,
+        source_context       TEXT        NOT NULL,
+        context              TEXT        NOT NULL,
+        approval_note        TEXT        NOT NULL,
+        source_approved      BOOLEAN     NOT NULL DEFAULT FALSE,
+        publication_approved BOOLEAN     NOT NULL DEFAULT FALSE,
+        updated_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS briefing_requests (
+        id                   TEXT        PRIMARY KEY,
+        agency_name          TEXT        NOT NULL,
+        program_interest     TEXT        NOT NULL,
+        contact_name         TEXT        NOT NULL,
+        contact_email        TEXT        NOT NULL,
+        message              TEXT,
+        notification_status  TEXT        NOT NULL DEFAULT 'pending',
+        notification_error   TEXT,
+        notified_at          TIMESTAMPTZ,
+        status               TEXT        NOT NULL DEFAULT 'new',
+        created_at           TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+
+      ALTER TABLE briefing_requests
+        ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new';
+
+      CREATE INDEX IF NOT EXISTS briefing_requests_created_at_idx
+        ON briefing_requests (created_at DESC);
+
+      CREATE INDEX IF NOT EXISTS briefing_requests_status_idx
+        ON briefing_requests (status);
     `);
 
-    // 2. Seed programs (skip existing rows)
     for (const p of PROGRAMS) {
       await client.query(
         `INSERT INTO program_outcomes
@@ -151,7 +178,6 @@ export async function runMigrations(): Promise<void> {
       );
     }
 
-    // 3. Seed aggregate impact singleton (skip if already present)
     await client.query(
       `INSERT INTO aggregate_impact (id, headline, note, stats)
        VALUES (1, $1, $2, $3::jsonb)
