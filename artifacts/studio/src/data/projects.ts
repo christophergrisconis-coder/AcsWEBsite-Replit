@@ -20,6 +20,21 @@ export interface Project {
   imageAlt: string;
 }
 
+export interface PartnerProof {
+  id: string;
+  kind: "testimonial" | "logo" | "case-study";
+  title: string;
+  quote?: string;
+  organization?: string;
+  sourceContext: string;
+  context: string;
+  approvalNote: string;
+  sourceApproved: boolean;
+  publicationApproved: boolean;
+}
+
+export const verifiedPartnerProofs: PartnerProof[] = [];
+
 export const projects: Project[] = [
   {
     id: "reentry-pathways",
