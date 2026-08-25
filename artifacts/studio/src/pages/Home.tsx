@@ -190,6 +190,60 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Capabilities */}
+      <section className="container-wide py-24 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <div className="lg:col-span-4">
+            <p className="text-label mb-4">Built for execution</p>
+            <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+              Strategy that can leave the page.
+            </h2>
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-separator">
+            <article className="bg-background border border-separator p-8">
+              <p className="text-label text-accent mb-6">01 / Message</p>
+              <h3 className="font-display text-2xl font-bold tracking-tight mb-3">
+                Strategic messaging
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Positioning, narrative systems, and communications built for
+                agency partners, RFP reuse, and clear public understanding.
+              </p>
+            </article>
+            <article className="bg-background border border-separator p-8">
+              <p className="text-label text-accent mb-6">02 / Make</p>
+              <h3 className="font-display text-2xl font-bold tracking-tight mb-3">
+                Media production
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Human-centered stories and production support that make complex
+                programs visible, credible, and easier to engage with.
+              </p>
+            </article>
+            <article className="bg-background border border-separator p-8">
+              <p className="text-label text-accent mb-6">03 / Ready</p>
+              <h3 className="font-display text-2xl font-bold tracking-tight mb-3">
+                Contract readiness
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                A disciplined creative standard for federal and state partners:
+                consistent, compliance-aware, and ready for the next review.
+              </p>
+            </article>
+            <article className="bg-background border border-separator p-8">
+              <p className="text-label text-accent mb-6">04 / Build</p>
+              <h3 className="font-display text-2xl font-bold tracking-tight mb-3">
+                Digital products
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Responsive web and mobile tools that turn curriculum,
+                progress, and participant support into usable systems.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       {/* Founder and partner value */}
       <section className="container-wide py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
