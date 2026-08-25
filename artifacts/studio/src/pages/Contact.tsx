@@ -16,7 +16,6 @@ const Contact = () => {
     <Layout showEchelonFooter>
       <section className="container-wide py-16 md:py-24 min-h-[calc(100vh-200px)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Content */}
           <div className="space-y-12">
             <div>
               <h1 className="text-display mb-6 animate-fade-in-up">
@@ -33,22 +32,19 @@ const Contact = () => {
               </p>
             </div>
 
-            {/* Contact info */}
             <div
               className="space-y-6 animate-fade-in-up"
               style={{ animationDelay: "0.2s" }}
             >
               <a
-                href="https://advancedcreationstudio.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:partnerships@advancedcreationstudio.com"
                 className="flex items-center gap-4 text-lg hover-highlight group"
               >
                 <ArrowUpRight
                   size={20}
                   className="text-muted-foreground group-hover:text-accent transition-colors"
                 />
-                <span>Visit advancedcreationstudio.com</span>
+                <span>partnerships@advancedcreationstudio.com</span>
               </a>
 
               <a
@@ -97,7 +93,6 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Image */}
           <div className="hidden lg:block">
             <div className="aspect-[4/5] bg-secondary overflow-hidden">
               <img
