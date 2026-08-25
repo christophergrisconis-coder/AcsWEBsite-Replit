@@ -1,0 +1,40 @@
+/*
+ * Print supplement for the ACS Partner Capabilities Statement.
+ * Palette, type, and spacing come from Organic via Tailwind classes.
+ */
+
+@page {
+  size: letter portrait;
+  margin: 0.45in 0.55in;
+}
+
+.acs-capabilities-root {
+  max-width: 7.5in;
+  margin: 0 auto;
+  padding: 0.45in 0.6in;
+}
+
+@media print {
+  .acs-capabilities-root {
+    max-width: none;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .acs-capabilities-section,
+  .acs-capabilities-section article,
+  .acs-capabilities-cta {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .acs-capabilities-root > * {
+    max-width: 100%;
+  }
+}
