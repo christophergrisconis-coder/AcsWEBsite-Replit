@@ -96,13 +96,29 @@ export function Header({ revealMode = false }: HeaderProps) {
     >
       <div className="container-wide relative">
         <div className="flex items-center justify-between h-20 md:h-24">
+          {/* Logo */}
           <Link
             href="/"
-            className="font-display text-lg font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
+            className="flex items-center gap-3 font-display text-lg font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
+            aria-label="Advanced Creation Studio home"
           >
-             Advanced Creation
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 32 32"
+              className="shrink-0"
+              aria-hidden="true"
+            >
+              <rect width="32" height="32" fill="#050505" />
+              <rect x="7" y="6" width="5" height="20" fill="#E5FF00" />
+              <rect x="20" y="6" width="5" height="20" fill="#E5FF00" />
+              <rect x="7" y="24" width="18" height="3" fill="#E5FF00" />
+              <polygon points="13,24 23,8 25,8 15,24" fill="#F7F7F4" />
+            </svg>
+            <span>Advanced Creation</span>
           </Link>
 
+          {/* Desktop Navigation — Centered */}
           <nav className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2">
             {navItems.map((item) => (
               <Link
@@ -127,23 +143,25 @@ export function Header({ revealMode = false }: HeaderProps) {
             </button>
           </nav>
 
+          {/* Right — Theme Toggle */}
           <div className="hidden md:flex items-center">
             <button
               onClick={toggleTheme}
               className="p-2 text-foreground/60 hover:text-foreground transition-colors focus-visible-ring"
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
             >
               {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
             </button>
           </div>
 
+          {/* Mobile controls */}
           <div className="md:hidden flex items-center gap-2">
             <button
               onClick={toggleTheme}
               className="p-2 text-foreground/60 hover:text-foreground transition-colors focus-visible-ring"
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
             >
               {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
             </button>
@@ -161,6 +179,7 @@ export function Header({ revealMode = false }: HeaderProps) {
         </div>
       </div>
 
+      {/* Mobile Navigation */}
       {isMenuOpen && (
         <div
           ref={mobileMenuRef}

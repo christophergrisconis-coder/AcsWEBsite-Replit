@@ -1,7 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Advanced Creation Studio">
   <rect width="1200" height="630" fill="#050505"/>
-  <rect x="72" y="72" width="1056" height="486" fill="none" stroke="#d7e600" stroke-width="4"/>
-  <text x="112" y="260" fill="#f7f7f4" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700">Advanced Creation</text>
-  <text x="116" y="350" fill="#d7e600" font-family="Arial, Helvetica, sans-serif" font-size="34" letter-spacing="8">PUBLIC SECTOR IMPACT</text>
-  <text x="116" y="470" fill="#f7f7f4" font-family="Arial, Helvetica, sans-serif" font-size="24">Reentry · Workforce · Coding · AI · Media</text>
+  <rect x="72" y="72" width="1056" height="486" fill="none" stroke="#E5FF00" stroke-width="4"/>
+
+  <!-- Brand mark: doorway + electric path -->
+  <g transform="translate(112, 180)">
+    <rect x="0" y="0" width="36" height="140" fill="#E5FF00"/>
+    <rect x="92" y="0" width="36" height="140" fill="#E5FF00"/>
+    <rect x="0" y="128" width="128" height="24" fill="#E5FF00"/>
+    <polygon points="42,140 118,12 136,12 60,140" fill="#F7F7F4"/>
+  </g>
+
+  <text x="280" y="260" fill="#F7F7F4" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="700">Advanced Creation</text>
+  <text x="280" y="340" fill="#E5FF00" font-family="Arial, Helvetica, sans-serif" font-size="30" letter-spacing="8">PUBLIC SECTOR IMPACT</text>
+  <text x="280" y="460" fill="#F7F7F4" font-family="Arial, Helvetica, sans-serif" font-size="24">Reentry · Workforce · Coding · AI · Media</text>
 </svg>
