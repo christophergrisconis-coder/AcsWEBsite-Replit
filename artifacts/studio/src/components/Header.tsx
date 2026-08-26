@@ -148,8 +148,8 @@ export function Header({ revealMode = false }: HeaderProps) {
             <button
               onClick={toggleTheme}
               className="p-2 text-foreground/60 hover:text-foreground transition-colors focus-visible-ring"
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
-              title={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
             >
               {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
             </button>
@@ -160,8 +160,8 @@ export function Header({ revealMode = false }: HeaderProps) {
             <button
               onClick={toggleTheme}
               className="p-2 text-foreground/60 hover:text-foreground transition-colors focus-visible-ring"
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
-              title={theme === "dark" ? "Switch to light theme" : "Switch to light theme"}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
             >
               {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
             </button>
