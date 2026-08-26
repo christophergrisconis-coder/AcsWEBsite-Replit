@@ -77,6 +77,12 @@ Admin inbox: `/admin/briefings` (unlock with `SESSION_SECRET` as the admin token
 `GET /api/partner-resources/capabilities.pdf` returns a downloadable PDF for
 procurement packets. The Partners page links to this endpoint directly.
 
+## PWA
+
+Production builds register `sw.js` for offline shell caching and show an install
+prompt when the browser fires `beforeinstallprompt`. Icons and
+`manifest.webmanifest` live under `artifacts/studio/public/`.
+
 ## Admin
 
 Set `SESSION_SECRET` and use it as the admin token on:

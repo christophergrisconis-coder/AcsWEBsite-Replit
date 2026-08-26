@@ -17,8 +17,8 @@ import AdminBriefings from '@/pages/AdminBriefings';
 import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import PartnerResources from '@/pages/PartnerResources';
-import LegalResearch from "@/pages/LegalResearch";
 import NotFound from '@/pages/not-found';
+import { InstallPrompt } from '@/components/InstallPrompt';
 
 const queryClient = new QueryClient();
 
@@ -38,7 +38,6 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/partners" component={PartnerResources} />
-        <Route path="/legal-research" component={LegalResearch} />
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>
@@ -58,6 +57,7 @@ function App() {
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
             <Router />
           </WouterRouter>
+          <InstallPrompt />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
