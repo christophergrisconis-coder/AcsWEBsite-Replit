@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const siteName = "Advanced Creation Studio";
-const siteUrl = "https://attentive-frayed-dehardwarization.replit.app";
+const siteUrl = "https://advancedcreationstudio.com";
 const defaultImage = "/acs-og-image.svg";
 
 interface PageMetadataOptions {

@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: https://attentive-frayed-dehardwarization.replit.app/sitemap.xml
+Disallow: /admin/
+
+Sitemap: https://advancedcreationstudio.com/sitemap.xml

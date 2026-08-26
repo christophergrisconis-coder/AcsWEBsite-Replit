@@ -14,7 +14,7 @@ test("impact area pages expose route-specific social and service metadata", asyn
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://attentive-frayed-dehardwarization.replit.app/work/reentry-pathways",
+    "https://advancedcreationstudio.com/work/reentry-pathways",
   );
 
   const structuredData = await page
@@ -38,7 +38,7 @@ test("stale printable program links are marked unavailable to crawlers", async (
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://attentive-frayed-dehardwarization.replit.app/outcomes/print?program=renamed-program",
+    "https://advancedcreationstudio.com/outcomes/print?program=renamed-program",
   );
   await expect(page.getByText("Program not found")).toBeVisible();
 });
