@@ -17,6 +17,7 @@ import AdminBriefings from '@/pages/AdminBriefings';
 import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import PartnerResources from '@/pages/PartnerResources';
+import TerminalLab from '@/pages/TerminalLab';
 import NotFound from '@/pages/not-found';
 import { InstallPrompt } from '@/components/InstallPrompt';
 
@@ -38,6 +39,7 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/partners" component={PartnerResources} />
+        <Route path="/terminal-lab" component={TerminalLab} />
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>

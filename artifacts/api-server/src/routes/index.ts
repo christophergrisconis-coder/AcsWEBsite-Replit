@@ -5,6 +5,7 @@ import outcomesRouter from "./outcomes";
 import partnerProofsRouter from "./partner-proofs";
 import partnerResourcesRouter from "./partner-resources";
 import legalResearchRouter from "./legal-research";
+import terminalLabRouter from "./terminal-lab";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(outcomesRouter);
 router.use(partnerProofsRouter);
 router.use(partnerResourcesRouter);
 router.use(legalResearchRouter);
+router.use(terminalLabRouter);
 
 export default router;

@@ -54,6 +54,17 @@ Open http://127.0.0.1:18425
 
 The studio dev server proxies `/api/*` to the API on port 8080.
 
+## Hosted / Cloudflare deployments
+
+When the site is served from a public domain (for example through Cloudflare Pages or a custom hostname), the frontend will still call `/api/*` by default. If the API is not mounted on the same origin, set `VITE_API_BASE_URL` to the public API origin before building the site:
+
+```bash
+export VITE_API_BASE_URL=https://api.example.com
+pnpm --filter @workspace/studio run build
+```
+
+This value is read in the client bootstrap and prepended to every relative `/api` request, so the same app can run on localhost, a custom domain, or a Cloudflare-hosted frontend.
+
 ## Briefing requests
 
 Agency briefing submissions are stored in Postgres (`briefing_requests`) and the
@@ -90,6 +101,33 @@ Set `SESSION_SECRET` and use it as the admin token on:
 - `/admin/briefings`
 - `/admin/outcomes`
 - `/admin/partner-proofs`
+
+## Terminal Teaching Lab (real sandbox mode)
+
+The `/terminal-lab` page supports a real execution mode through the API. This mode is
+intended for learning workflows in an isolated folder (for example, an external drive).
+
+Set these API environment variables:
+
+| Variable | Purpose |
+|----------|---------|
+| `ENABLE_TERMINAL_LAB=true` | Enables real command execution routes |
+| `TERMINAL_LAB_ROOT=/absolute/path` | Restricts execution to a sandbox directory tree |
+| `SESSION_SECRET` | Required as `x-admin-token` to connect and run commands |
+
+Recommended external-drive sandbox path:
+
+`/Volumes/Chris's External Hard Drive/Sandbox terminal practice-vs`
+
+Notes:
+- Commands run without a shell and are constrained to an allowlist (`git`, `pnpm`, `npm`,
+  `node`, `npx`, `tsc`, `ls`, `pwd`, `cat`, `echo`, `mkdir`, `touch`, `cp`, `mv`, `rm`, `gh`).
+- The API rejects any working directory that escapes `TERMINAL_LAB_ROOT`.
+- The `/terminal-lab` app includes:
+  - **Terminal tab** (practice + real sandbox modes)
+  - **GitHub integration** helpers (init, commit, create repo, push)
+  - **Terminology tab** (abbreviations + definitions search)
+  - **Tutor AI tab** (ask "why" and workflow questions)
 
 ## Other commands
 
